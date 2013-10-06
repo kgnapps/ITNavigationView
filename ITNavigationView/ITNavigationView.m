@@ -119,6 +119,13 @@
 - (void)setCurrentViewController:(NSViewController *)currentViewController withAnimation:(BOOL)animationFlag {
     if (_isLocked) return;
     
+    if ([_currentViewController respondsToSelector:@selector(navigationViewWillStartAnimating)]) {
+        [(id<ITNavigationViewDelegate>)_currentViewController navigationViewWillStartAnimating];
+    }
+    if ([currentViewController respondsToSelector:@selector(navigationViewWillStartAnimating)]) {
+        [(id<ITNavigationViewDelegate>)currentViewController navigationViewWillStartAnimating];
+    }
+    
     // Resize the subview to fit perfectly and add it
     _currentViewController.view.frame = self.bounds;
     currentViewController.view.frame = self.bounds;
@@ -165,6 +172,10 @@
                     
                     // Set the first responder
                     [currentViewController.view becomeFirstResponder];
+
+                    if ([currentViewController respondsToSelector:@selector(navigationViewDidStopAnimating)]) {
+                        [(id<ITNavigationViewDelegate>)currentViewController navigationViewDidStopAnimating];
+                    }
                     
                     _isLocked = NO;
                 }];

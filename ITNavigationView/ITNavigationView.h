@@ -25,6 +25,15 @@
 #ifndef ITNavigationViewTypedef
 #define ITNavigationViewTypedef
 
+/**
+ *  Protocol for the view controllers, displayed in `ITNavigationView`.
+ *  This allows the view controller to receive notifications.
+ */
+@protocol ITNavigationViewDelegate <NSObject>
+- (void)navigationViewWillStartAnimating;
+- (void)navigationViewDidStopAnimating;
+@end
+
 typedef enum {
     ITNavigationViewAnimationStylePush,
     ITNavigationViewAnimationStylePop,
